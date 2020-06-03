@@ -1,0 +1,158 @@
+.yap-control-panel {
+    background-color: white;
+    width: 500px;
+    height: 100vh;
+    overflow-y: scroll;
+    position: fixed;
+    border-left: 1px solid black;
+    padding: 0;
+    z-index: 99;
+    right: 0;
+    top: 0;
+    font-size: 14px;
+}
+
+.yap-header {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: brown;
+    text-decoration: underline;
+}
+
+.yap-result {
+    border-bottom: 1px solid #aaaaaa;
+    padding: 0;
+    background-color: antiquewhite;
+}
+
+.yap-result__success {
+    background-color: green;
+}
+
+.yap-rule {
+    padding: 10px 10px 0;
+}
+
+.yap-rule > * {
+    padding-bottom: 10px;
+}
+
+.yap-rule__description {
+    color: darkblue;
+    user-select: all;
+}
+
+.yap-rule__type {
+    user-select: all;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.yap-result__extra {
+    display: block;
+    padding: 10px;
+    unicode-bidi: embed;
+    background: #eeeeee;
+}
+
+.yap-result__extra-raw {
+    font-family: monospace;
+    white-space: pre;
+    background: #eeeeee;
+    font-size: .6em;
+}
+
+.yap-result__extra-positioned {
+
+}
+
+.yap-rule_reject {
+    background-color: salmon;
+}
+
+.yap-rule_fix {
+    background-color: #e2db7f;
+}
+
+.yap-_collapsed {
+    display: none;
+}
+
+.yap-_clickable {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+
+.yap-error {
+    border-bottom: 1px solid salmon;
+    margin: 10px;
+    padding-bottom: 5px;
+    font-size: 15px;
+}
+
+.yap-error:last-child {
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+
+.yap-error__filepath {
+    margin-bottom: 10px;
+    color: crimson;
+}
+
+.yap-error__message {
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+.yap-error__message-goto {
+    /*display: inline;*/
+    /*float: left;*/
+    /*margin-right: 5px;*/
+}
+
+.yap-error__message-message {
+    /*display: inline;*/
+    /*float: left;*/
+}
+
+/* Tooltip container */
+.yap-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.yap-tooltip .yap-tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 90;
+    bottom: 110%;
+    left: 135px;
+    margin-left: -230px;
+    opacity: 0.7;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.yap-tooltip:hover .yap-tooltiptext {
+    visibility: visible;
+}
+
+.yap-tooltip:hover .yap-tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #000 transparent transparent transparent;
+}

@@ -1,0 +1,36 @@
+{
+  "background": {
+    "page": "src/html/background.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:8085/",
+        "https://praktikum-admin.yandex-team.ru/*"
+      ],
+      "js": [
+        "src/js/content.js"
+      ]
+    }
+  ],
+  "description": "Inserts comments from auto checker.",
+  "icons": {
+    "128": "src/img/icon-128.png",
+    "64": "src/img/icon-64.png",
+    "32": "src/img/icon-32.png",
+    "24": "src/img/icon-24.png",
+    "16": "src/img/icon-16.png"
+  },
+  "manifest_version": 2,
+  "name": "Yapractic Helper",
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "src/css/*",
+    "src/js/*"
+  ],
+  "version": "0.1.1"
+}
