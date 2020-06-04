@@ -1,3 +1,5 @@
+import {copyToClipboardText} from "../Utils/utils.js";
+
 export default class CommentsManager {
 
     insertPositionedCommentsFromResult(result) {
@@ -32,6 +34,16 @@ export default class CommentsManager {
         }
     }
 
+    /**
+     * @param {Rule} rule
+     * @param {Error} error
+     * @param {Message} message
+     * @param {boolean} scrollTo
+     */
+    addComment(rule, error, message, scrollTo) {
+        copyToClipboardText("[не сделано] " + rule.description + " (" + message.message + ")");
+    }
+
     _processError(error) {
         const filename = this._getFileNameFromError(error);
         const block = this._getFileBlock(filename);
@@ -51,15 +63,32 @@ export default class CommentsManager {
      * @return {Node}
      */
     _getFileBlock(filename) {
-        return document.evaluate("//div[contains(text(), '" + filename + "')]/ancestor::button", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.parentNode;
+        return document.evaluate(
+            "//div[contains(text(), '" + filename + "')]/ancestor::button",
+            document,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE,
+            null
+        ).singleNodeValue.parentNode;
     }
 
     _openBlock(filename, block) {
-        const result = document.evaluate("self::node()/descendant::div[text()  = '1']", block, null, XPathResult.FIRST_ORDERED_NODE_TYPE);
+        const result = document.evaluate(
+            "self::node()/descendant::div[text()  = '1']",
+            block,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE
+        );
 
         if (result.singleNodeValue) return;
 
-        document.evaluate("//div[contains(text(), '" + filename + "')]/ancestor::button", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();
+        document.evaluate(
+            "//div[contains(text(), '" + filename + "')]/ancestor::button",
+            document,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE,
+            null
+        ).singleNodeValue.click();
     }
 
     /**
@@ -70,12 +99,17 @@ export default class CommentsManager {
      */
     _showMessage(message, block) {
         const line = message.line;
-        const lineElem = document.evaluate("self::node()/descendant::div[text()  = '" + line + "']", block, null, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue;
+        const lineElem = document.evaluate(
+            "self::node()/descendant::div[text()  = '" + line + "']",
+            block,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE
+        ).singleNodeValue;
         lineElem.style.backgroundColor = "#f86c6b";
         lineElem.parentNode.classList.add('yap-tooltip');
         lineElem.title = message.message;
 
-        if(!lineElem.parentNode.querySelector('.yap-tooltiptext')){
+        if (!lineElem.parentNode.querySelector('.yap-tooltiptext')) {
             const tooltipTextElem = document.createElement('span');
             tooltipTextElem.classList.add('yap-tooltiptext');
             tooltipTextElem.textContent = message.message;

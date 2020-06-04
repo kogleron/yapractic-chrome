@@ -1,17 +1,17 @@
 export default class AbstractExtraFormatter {
     /**
-     * @param {object} extra
      * @return {boolean}
+     * @param {Result} result
      */
-    supports(extra) {
+    supports(result) {
         throw "Define me";
     }
 
     /**
      * @param {HTMLElement} extraElem
-     * @param {object} extra
+     * @param {Result} result
      */
-    format(extraElem, extra) {
+    format(extraElem, result) {
         throw "Define me"
     }
 

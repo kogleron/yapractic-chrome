@@ -6,11 +6,24 @@ export function injectCss(file) {
     document.getElementsByTagName("head")[0].appendChild(link);
 }
 
-export function copyClipboard(elem) {
+export function copyToClipboardElementText(elem) {
     const selection = window.getSelection();
     const range = document.createRange();
     range.selectNodeContents(elem);
     selection.removeAllRanges();
     selection.addRange(range);
     document.execCommand("Copy");
+}
+
+export function copyToClipboardText(text) {
+    const dummy = document.createElement("textarea");
+    // to avoid breaking orgain page when copying more words
+    // cant copy when adding below this code
+    dummy.style.position = 'absolute';
+    dummy.style.left = '-1000px';
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
 }

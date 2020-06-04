@@ -1,6 +1,9 @@
 import AbstractExtraFormatter from "./AbstractExtraFormatter.js";
 
 export default class PositionedExtraFormatter extends AbstractExtraFormatter {
+    /**
+     * @type {CommentsManager}
+     */
     _commentsManager;
 
     /**
@@ -11,73 +14,98 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
         this._commentsManager = commentsManager;
     }
 
-    /**
-     * @param {object} extra
-     * @return {boolean}
-     */
-    supports(extra) {
-        return extra && extra.type && 'positioned' === extra.type;
+    supports(result) {
+        // noinspection JSUnresolvedVariable
+        return result.extra && result.extra.type
+            && 'positioned' === result.extra.type && Array.isArray(result.extra.errors);
     }
 
-    /**
-     * @param {HTMLElement} extraElem
-     * @param {object} extra
-     */
-    format(extraElem, extra) {
+    format(extraElem, result) {
         const blockElem = document.createElement('div');
         blockElem.classList.add('.yap-result__extra-positioned');
 
         extraElem.append(blockElem);
 
         // noinspection JSUnresolvedVariable
-        extra.errors.forEach(error => blockElem.append(this._createErrorElem(error)));
+        result.extra.errors.forEach(error => blockElem.append(this._createErrorElem(error, result.rule)));
     }
 
     /**
      *
-     * @param {object} error
+     * @param {Error} error
+     * @param {Rule} rule
      * @return {HTMLElement}
      * @private
      */
-    _createErrorElem(error) {
+    _createErrorElem(error, rule) {
         const errorElem = document.createElement('div');
         errorElem.classList.add('yap-error');
 
         const fileElement = document.createElement('div');
         fileElement.classList.add('yap-error__filepath');
+        // noinspection JSValidateTypes
         fileElement.textContent = error.filePath.match(/[^/]+$/);
 
         errorElem.append(fileElement);
 
         // noinspection JSUnresolvedVariable
-        error.messages.forEach(message => errorElem.append(this._createMessageElem(message, error)));
+        error.messages.forEach(message => errorElem.append(this._createMessageBlock(message, error, rule)));
 
         return errorElem;
     }
 
     /**
-     * @param {object} message
-     * @param error
+     * @param {Message} message
+     * @param {Error} error
+     * @param {Rule} rule
      * @return {HTMLElement}
      * @private
      */
-    _createMessageElem(message, error) {
+    _createMessageBlock(message, error, rule) {
+
         const block = document.createElement('div');
         block.classList.add('yap-error__message');
 
-        const gotoElem = document.createElement('span');
-        gotoElem.classList.add('yap-error__message-goto', 'yap-_clickable');
-        gotoElem.textContent = message.line + ":" + message.column;
-        gotoElem.onclick = () => {
-            this._commentsManager.showErrorMessage(error, message, true)
-        };
-
-        const messageElem = document.createElement('span');
-        messageElem.textContent = " " + message.message;
-        messageElem.classList.add('yap-error__message-message');
-
-        block.append(gotoElem, messageElem);
+        block.append(
+            this._createAddCommentElem(message, error, rule),
+            this._createGotoElem(message, error),
+            this._createMessageElem(message)
+        );
 
         return block;
+    }
+
+    _createMessageElem(message) {
+        const element = document.createElement('span');
+        element.textContent = " " + message.message;
+        element.classList.add('yap-error__message-message');
+        return element;
+    }
+
+    _createGotoElem(message, error) {
+        const element = document.createElement('span');
+        element.classList.add('yap-error__message-goto', 'yap-_clickable');
+        element.textContent = message.line + ":" + message.column;
+        element.onclick = () => {
+            this._commentsManager.showErrorMessage(error, message, true)
+        };
+        return element;
+    }
+
+    /**
+     * @param {Message} message
+     * @param {Error} error
+     * @param {Rule} rule
+     * @return {HTMLElement}
+     * @private
+     */
+    _createAddCommentElem(message, error, rule) {
+        const element = document.createElement('span');
+        element.classList.add('yap-error__message-add-comment', 'yap-_clickable');
+        element.textContent = "[+]";
+        element.onclick = () => {
+            this._commentsManager.addComment(rule, error, message, true);
+        };
+        return element;
     }
 }

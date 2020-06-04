@@ -12,16 +12,16 @@ export default class ExtraFormatter {
 
     /**
      * @param {HTMLElement} extraElem
-     * @param {object} extra
+     * @param {Result} result
      */
-    format(extraElem, extra) {
+    format(extraElem, result) {
         this._formatters.every(
             formatter => {
-                if(!formatter.supports(extra)){
+                if (!formatter.supports(result)) {
                     return true;
                 }
 
-                formatter.format(extraElem, extra);
+                formatter.format(extraElem, result);
                 return false;
             }
         );

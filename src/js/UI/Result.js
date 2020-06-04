@@ -1,6 +1,9 @@
-import {copyClipboard} from "../Utils/utils.js";
+import {copyToClipboardText} from "../Utils/utils.js";
 
 export default class Result {
+    /**
+     * @type {AbstractExtraFormatter}
+     */
     _extraFormatter;
 
     constructor(data, extraFormatter) {
@@ -9,7 +12,7 @@ export default class Result {
     }
 
     /**
-     * @return {HTMLHtmlElement}
+     * @return {HTMLElement}
      */
     createElem() {
         return this._createResult(this._data);
@@ -17,7 +20,7 @@ export default class Result {
 
     /**
      * @param result
-     * @return {HTMLDivElement}
+     * @return {HTMLElement}
      * @private
      */
     _createResult(result) {
@@ -25,7 +28,7 @@ export default class Result {
         resultElem.classList.add('yap-result');
         resultElem.append(
             this._createRule(result),
-            this._createExtra(result.extra)
+            this._createExtra(result)
         );
 
         return resultElem;
@@ -57,7 +60,7 @@ export default class Result {
         descriptionElem.classList.add('yap-rule__description');
         descriptionElem.textContent = rule.description;
         descriptionElem.onclick = function (evt) {
-            copyClipboard(evt.target);
+            copyToClipboardText("[не сделано] " + evt.target.textContent);
         };
 
         const typeElem = document.createElement('div');
@@ -71,15 +74,16 @@ export default class Result {
     }
 
     /**
-     * @param extra
      * @return {HTMLElement}
      * @private
+     * @param {Result} result
      */
-    _createExtra(extra) {
+    _createExtra(result) {
         const extraElem = document.createElement('div');
-        extraElem.classList.add('yap-result__extra', 'yap-_collapsed');
+        extraElem.classList.add('yap-result__extra');
+        // extraElem.classList.add('yap-_collapsed');
 
-        this._extraFormatter.format(extraElem, extra);
+        this._extraFormatter.format(extraElem, result);
 
         return extraElem;
     }
