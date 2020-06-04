@@ -12,12 +12,48 @@
     font-size: 14px;
 }
 
+.yap-control-panel.yap-control-panel_closed{
+    width: auto;
+    height: auto;
+}
+
 .yap-header {
-    padding: 10px;
     text-align: center;
-    cursor: pointer;
-    color: brown;
-    text-decoration: underline;
+    border-bottom: 1px solid #333333;
+}
+
+.yap-header-toolbar {
+    background-color: #1abc9c;
+    padding: 10px;
+    margin: 0;
+    list-style: none;
+}
+
+.yap-header-toolbar__item{
+    display: inline-block;
+    border-radius: 5px;
+    padding: 7px 10px;
+    margin: 0 10px;
+    background-color: #138d79;
+}
+
+.yap-control-panel_closed .yap-header-toolbar__item{
+    display: none;
+}
+
+.yap-header-toolbar__item_open{
+    display: none;
+}
+.yap-control-panel_closed .yap-header-toolbar__item_open {
+    display: inline-block;
+}
+
+.yap-header-toolbar__item.yap-_clickable{
+    color: #ffffff;
+}
+
+.yap-header-toolbar__item.yap-_clickable:hover{
+    text-decoration: none;
 }
 
 .yap-result {
@@ -80,9 +116,12 @@
 }
 
 .yap-_clickable {
-    text-decoration: underline;
     color: blue;
     cursor: pointer;
+}
+
+.yap-_clickable:hover {
+    text-decoration: underline;
 }
 
 .yap-error {
