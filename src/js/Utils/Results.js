@@ -2,7 +2,7 @@
  * @return {Promise<any>}
  */
 export const fetchResults = function () {
-    return fetch('http://localhost:8090/result.json')
+    return fetch('http://localhost:8090/.last-check/result.json')
         .then(response => response.json());
 };
 
