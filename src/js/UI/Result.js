@@ -81,7 +81,7 @@ export default class Result {
     _createExtra(result) {
         const extraElem = document.createElement('div');
         extraElem.classList.add('yap-result__extra');
-        // extraElem.classList.add('yap-_collapsed');
+        extraElem.classList.add('yap-_collapsed');
 
         this._extraFormatter.format(extraElem, result);
 
