@@ -20,7 +20,7 @@ export default class CommentsManager {
         // }
     }
 
-    showErrorMessage(error, message, scrollTo) {
+    showErrorMessage(error, message, rule, scrollTo) {
         const filename = this._getFileNameFromError(error);
         const block = this._getFileBlock(filename);
 
@@ -28,7 +28,7 @@ export default class CommentsManager {
 
         // noinspection JSUnresolvedVariable
         const lineElem = this._showMessage(message, block);
-
+        copyToClipboardText("[не сделано] " + rule.description + " (" + message.message + ")");
         if (scrollTo) {
             lineElem.scrollIntoView();
         }

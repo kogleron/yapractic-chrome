@@ -12,9 +12,10 @@
     font-size: 14px;
 }
 
-.yap-control-panel.yap-control-panel_closed{
+.yap-control-panel.yap-control-panel_closed {
     width: auto;
     height: auto;
+    border-bottom-left-radius: 5px;
 }
 
 .yap-header {
@@ -29,7 +30,7 @@
     list-style: none;
 }
 
-.yap-header-toolbar__item{
+.yap-header-toolbar__item {
     display: inline-block;
     border-radius: 5px;
     padding: 7px 10px;
@@ -37,22 +38,23 @@
     background-color: #138d79;
 }
 
-.yap-control-panel_closed .yap-header-toolbar__item{
+.yap-control-panel_closed .yap-header-toolbar__item {
     display: none;
 }
 
-.yap-header-toolbar__item_open{
+.yap-header-toolbar__item_open {
     display: none;
 }
+
 .yap-control-panel_closed .yap-header-toolbar__item_open {
     display: inline-block;
 }
 
-.yap-header-toolbar__item.yap-_clickable{
+.yap-header-toolbar__item.yap-_clickable {
     color: #ffffff;
 }
 
-.yap-header-toolbar__item.yap-_clickable:hover{
+.yap-header-toolbar__item.yap-_clickable:hover {
     text-decoration: none;
 }
 
@@ -194,4 +196,49 @@
     border-width: 5px;
     border-style: solid;
     border-color: #000 transparent transparent transparent;
+}
+
+.yap-checklist {
+    padding: 10px;
+}
+
+.yap-checklist h3, .yap-checklist h4{
+    margin: 0;
+    padding: 5px 0;
+}
+
+.yap-checklist ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 15px;
+    margin-bottom: 10px;
+}
+
+.yap-checklist li{
+    padding: 0;
+    margin: 0;
+}
+
+.yap-checklist>ul{
+    padding-left: 0;
+}
+
+.yap-checklist label{
+    cursor: pointer;
+    line-height: 20px;
+    background-color: #fff0bb;
+    display: inline;
+    user-select: all;
+}
+
+.yap-checklist [type="checkbox"]
+{
+    vertical-align:middle;
+    display: inline-block;
+    margin-bottom: 3px;
+}
+
+.yap-checklist input:checked+label {
+    background-color: salmon;
 }

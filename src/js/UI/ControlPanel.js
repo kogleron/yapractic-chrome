@@ -1,4 +1,10 @@
+import {copyToClipboardText, copyToClipboardElementText} from "../Utils/utils.js";
+
 export default class ControlPanel {
+    /**
+     * @type {HTMLElement}
+     */
+    _checklistElem;
 
     constructor() {
         /**
@@ -53,6 +59,16 @@ export default class ControlPanel {
         elems.forEach(elem => this._resultsElem.append(elem));
     }
 
+    /**
+     * @param {String} html
+     */
+    setChecklist(html) {
+        if (this._checklistElem) this._checklistElem.remove();
+
+        this._panelElem.querySelector('.yap-control-panel__content')
+            .append(this._createChecklist(html));
+    }
+
     _createHeader() {
         const headerElement = document.createElement('header');
         headerElement.classList.toggle('yap-header');
@@ -60,30 +76,48 @@ export default class ControlPanel {
         const listElement = document.createElement('ul');
         listElement.classList.add('yap-header-toolbar');
 
-        const refreshElem = document.createElement('li');
-        refreshElem.classList.add('yap-header-toolbar__item', 'yap-_clickable');
-        refreshElem.textContent = 'Обновить';
-        refreshElem.onclick = this.onRefreshHandler;
+        const refreshElem = this._createRefreshButton();
+        const gotoElem = this._createGotoButton();
+        const closeElem = this._createCloseButton();
+        const checklistElem = this._createChecklistButton();
+        const openElem = this._createOpenButton();
 
-        const gotoElem = document.createElement('li');
-        gotoElem.classList.add('yap-header-toolbar__item', 'yap-_clickable');
-        gotoElem.textContent = 'Перейти';
-        gotoElem.onclick = this._onGotoHandler;
+        listElement.append(gotoElem, checklistElem, refreshElem, closeElem, openElem);
+        headerElement.append(listElement);
 
-        const closeElem = document.createElement('li');
-        closeElem.classList.add('yap-header-toolbar__item', 'yap-_clickable');
-        closeElem.textContent = 'Закрыть';
-        closeElem.onclick = () => this._onOpenCloseHandler();
+        return headerElement;
+    }
 
+    _createOpenButton() {
         const openElem = document.createElement('li');
         openElem.classList.add('yap-header-toolbar__item', 'yap-_clickable', 'yap-header-toolbar__item_open');
         openElem.textContent = 'Открыть';
         openElem.onclick = () => this._onOpenCloseHandler();
+        return openElem;
+    }
 
-        listElement.append(gotoElem, refreshElem, closeElem, openElem);
-        headerElement.append(listElement);
+    _createCloseButton() {
+        const closeElem = document.createElement('li');
+        closeElem.classList.add('yap-header-toolbar__item', 'yap-_clickable');
+        closeElem.textContent = 'Закрыть';
+        closeElem.onclick = () => this._onOpenCloseHandler();
+        return closeElem;
+    }
 
-        return headerElement;
+    _createGotoButton() {
+        const gotoElem = document.createElement('li');
+        gotoElem.classList.add('yap-header-toolbar__item', 'yap-_clickable');
+        gotoElem.textContent = 'Перейти';
+        gotoElem.onclick = this._onGotoHandler;
+        return gotoElem;
+    }
+
+    _createRefreshButton() {
+        const refreshElem = document.createElement('li');
+        refreshElem.classList.add('yap-header-toolbar__item', 'yap-_clickable');
+        refreshElem.textContent = 'Обновить';
+        refreshElem.onclick = this.onRefreshHandler;
+        return refreshElem;
     }
 
     _onGotoHandler() {
@@ -115,5 +149,36 @@ export default class ControlPanel {
     _onOpenCloseHandler() {
         this._panelElem.classList.toggle('yap-control-panel_closed');
         this._panelElem.querySelector('.yap-control-panel__content').classList.toggle('yap-_collapsed');
+    }
+
+    _createChecklistButton() {
+        const button = document.createElement('li');
+        button.classList.add('yap-header-toolbar__item', 'yap-_clickable');
+        button.textContent = 'Чеклист';
+        button.onclick = () => this.onChecklistHandler();
+        return button;
+    }
+
+    onChecklistHandler = () => {
+        alert('Clicked')
+    };
+
+    _createChecklist(html) {
+        const checklistElem = document.createElement('div');
+        checklistElem.innerHTML = html;
+        checklistElem.classList.add('yap-checklist');
+
+        if (this._checklistElem) {
+            this._checklistElem.remove();
+        }
+
+        this._checklistElem = checklistElem;
+        this._checklistElem.addEventListener('click', (evt) => {
+            if (evt.target.nodeName !== 'LABEL') return;
+
+            copyToClipboardText("[не сделано] " + evt.target.textContent);
+        });
+
+        return checklistElem;
     }
 }
