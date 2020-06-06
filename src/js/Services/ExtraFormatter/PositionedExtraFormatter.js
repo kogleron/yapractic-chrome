@@ -67,7 +67,6 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
         block.classList.add('yap-error__message');
 
         block.append(
-            this._createAddCommentElem(message, error, rule),
             this._createGotoElem(message, error, rule),
             this._createMessageElem(message)
         );
@@ -88,23 +87,6 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
         element.textContent = message.line + ":" + message.column;
         element.onclick = () => {
             this._commentsManager.showErrorMessage(error, message, rule,true)
-        };
-        return element;
-    }
-
-    /**
-     * @param {Message} message
-     * @param {Error} error
-     * @param {Rule} rule
-     * @return {HTMLElement}
-     * @private
-     */
-    _createAddCommentElem(message, error, rule) {
-        const element = document.createElement('span');
-        element.classList.add('yap-error__message-add-comment', 'yap-_clickable');
-        element.textContent = "[+]";
-        element.onclick = () => {
-            this._commentsManager.addComment(rule, error, message, true);
         };
         return element;
     }

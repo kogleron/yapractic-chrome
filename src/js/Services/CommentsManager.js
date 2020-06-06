@@ -21,27 +21,22 @@ export default class CommentsManager {
     }
 
     showErrorMessage(error, message, rule, scrollTo) {
+        copyToClipboardText("[не сделано] " + rule.description + " (" + message.message + ")");
+
         const filename = this._getFileNameFromError(error);
         const block = this._getFileBlock(filename);
 
+        if (!block) {
+            return;
+        }
         this._openBlock(filename, block);
 
         // noinspection JSUnresolvedVariable
         const lineElem = this._showMessage(message, block);
-        copyToClipboardText("[не сделано] " + rule.description + " (" + message.message + ")");
+
         if (scrollTo) {
             lineElem.scrollIntoView();
         }
-    }
-
-    /**
-     * @param {Rule} rule
-     * @param {Error} error
-     * @param {Message} message
-     * @param {boolean} scrollTo
-     */
-    addComment(rule, error, message, scrollTo) {
-        copyToClipboardText("[не сделано] " + rule.description + " (" + message.message + ")");
     }
 
     _processError(error) {
