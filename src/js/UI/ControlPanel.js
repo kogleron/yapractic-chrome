@@ -1,4 +1,4 @@
-import {copyToClipboardText, copyToClipboardElementText} from "../Utils/utils.js";
+import {copyToClipboardText} from "../Utils/utils.js";
 
 export default class ControlPanel {
     /**
@@ -76,13 +76,13 @@ export default class ControlPanel {
         const listElement = document.createElement('ul');
         listElement.classList.add('yap-header-toolbar');
 
-        const refreshElem = this._createRefreshButton();
-        const gotoElem = this._createGotoButton();
-        const closeElem = this._createCloseButton();
-        const checklistElem = this._createChecklistButton();
-        const openElem = this._createOpenButton();
-
-        listElement.append(gotoElem, checklistElem, refreshElem, closeElem, openElem);
+        listElement.append(
+            this._createGotoButton(),
+            // this._createChecklistButton(),
+            this._createRefreshButton(),
+            this._createCloseButton(),
+            this._createOpenButton()
+        );
         headerElement.append(listElement);
 
         return headerElement;

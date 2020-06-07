@@ -35,5 +35,4 @@ export function main() {
             .then(data => controlPanel.setChecklist(data));
     };
     controlPanel.show();
-    controlPanel.onRefreshHandler();
 }
