@@ -90,4 +90,12 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
         };
         return element;
     }
+
+    /**
+     * @param {Result} result
+     * @return boolean
+     */
+    collapsed(result) {
+        return false;
+    }
 }

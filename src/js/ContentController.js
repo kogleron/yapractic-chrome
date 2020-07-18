@@ -9,6 +9,7 @@ import PositionedExtraFormatter from "./Services/ExtraFormatter/PositionedExtraF
 import FileBrowser from "./Services/FileBrowser.js";
 
 import {URLS} from "./consts.js";
+import SimpleErrorFormatter from "./Services/ExtraFormatter/SimpleErrorFormatter.js";
 
 // noinspection JSUnusedGlobalSymbols
 export function main() {
@@ -18,6 +19,7 @@ export function main() {
     const controlPanel = new ControlPanel();
     const extraFormatter = new ExtraFormatter(
         new PositionedExtraFormatter(commentsManager),
+        new SimpleErrorFormatter(),
         new RawExtraFormatter()
     );
 

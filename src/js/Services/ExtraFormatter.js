@@ -26,4 +26,24 @@ export default class ExtraFormatter {
             }
         );
     }
+
+    /**
+     * @param {Result} result
+     * @return boolean
+     */
+    collapsed(result) {
+        let needCollapse = true;
+        this._formatters.every(
+            formatter => {
+                if (!formatter.supports(result)) {
+                    return true;
+                }
+
+                needCollapse = formatter.collapsed(result);
+                return false;
+            }
+        );
+
+        return needCollapse;
+    }
 }

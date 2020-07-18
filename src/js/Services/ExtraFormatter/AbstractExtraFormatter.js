@@ -15,4 +15,11 @@ export default class AbstractExtraFormatter {
         throw "Define me"
     }
 
+    /**
+     * @param {Result} result
+     * @return boolean
+     */
+    collapsed(result) {
+        return true;
+    }
 }

@@ -12,8 +12,14 @@
     z-index: 20000;
     right: 0;
     top: 0;
-    font-size: 14px;
+    font-size: 13px;
     color: #333333;
+}
+
+.yap-control-panel * {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 .yap-control-panel.yap-control-panel_closed {
@@ -33,7 +39,7 @@
     width: 100%;
 }
 
-.yap-control-panel_closed .yap-header{
+.yap-control-panel_closed .yap-header {
     width: auto;
 }
 
@@ -98,8 +104,17 @@
     padding-bottom: 10px;
 }
 
+.yap-rule__name {
+    text-align: right;
+    color: #666;
+    font-size: .8rem;
+}
+
 .yap-rule__description {
     user-select: all;
+    cursor: pointer;
+    margin-left: 30px;
+    white-space: pre-line;
 }
 
 .yap-rule__type {
@@ -108,7 +123,29 @@
     text-decoration: underline;
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
+    font-size: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: #eee;
+    line-height: 0;
+    border-radius: 21px;
+}
+
+.yap-rule_reject .yap-rule__type {
+    background-color: #e63946;
+    opacity: .7;
+}
+
+.yap-rule_fix .yap-rule__type {
+    background-color: #f3722c;
+    opacity: .7;
+}
+
+.yap-rule_better .yap-rule__type {
+    background-color: #98c1d9;
+    opacity: .5;
 }
 
 .yap-result__extra {
@@ -117,6 +154,10 @@
     unicode-bidi: embed;
     margin-top: -10px;
     margin-bottom: -10px;
+    white-space: pre-line;
+    font-size: .7rem;
+    opacity: .8;
+    color: #355070;
 }
 
 .yap-result__extra-raw {
@@ -129,24 +170,12 @@
 
 }
 
-.yap-rule_reject, .yap-rule_reject + .yap-result__extra{
-    background-color: salmon;
-}
-
-.yap-rule_fix, .yap-rule_fix + .yap-result__extra {
-    background-color: #e2db7f;
-}
-
-.yap-rule_better, .yap-rule_better + .yap-result__extra {
-    background-color: #ffeb3b30;
-}
-
 .yap-_collapsed {
     display: none;
 }
 
 .yap-_clickable {
-    color: blue;
+    color: #023e8a;
     cursor: pointer;
 }
 
@@ -155,7 +184,7 @@
 }
 
 .yap-error {
-    border-top: 1px solid salmon;
+    border-top: 1px solid #f0efeb;
     margin: 10px 0 10px 10px;
     padding-top: 10px;
 }
@@ -167,23 +196,12 @@
 
 .yap-error__filepath {
     margin-bottom: 10px;
-    color: crimson;
+    color: salmon;
 }
 
 .yap-error__message {
     margin-bottom: 5px;
     overflow: hidden;
-}
-
-.yap-error__message-goto {
-    /*display: inline;*/
-    /*float: left;*/
-    /*margin-right: 5px;*/
-}
-
-.yap-error__message-message {
-    /*display: inline;*/
-    /*float: left;*/
 }
 
 /* Tooltip container */
@@ -230,16 +248,16 @@
 }
 
 .yap-checklist h3, .yap-checklist h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
     margin: 0;
     padding: 5px 0;
 }
 
 .yap-checklist ul {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
-    padding-left: 15px;
-    margin-bottom: 10px;
+    padding: 0 0 0 15px;
+    margin: 0 0 10px;
 }
 
 .yap-checklist li {
@@ -266,4 +284,9 @@
 
 .yap-checklist input:checked + label {
     background-color: salmon;
+}
+
+.yap-result__extra-simple_error {
+    user-select: all;
+    cursor: pointer;
 }

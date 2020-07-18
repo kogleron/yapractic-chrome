@@ -20,7 +20,7 @@ export default class ControlPanel {
     show() {
         const contentElem = document.createElement('div');
         contentElem.classList.add('yap-control-panel__content');
-        contentElem.append(this._createResults());
+        contentElem.append(this._createResultsElem());
 
         const panelElem = document.createElement('div');
         panelElem.classList.add('yap-control-panel');
@@ -36,7 +36,7 @@ export default class ControlPanel {
         alert('Clicked')
     };
 
-    _createResults() {
+    _createResultsElem() {
         const resultsElem = document.createElement('div');
         resultsElem.classList.add('yap-results');
 
@@ -55,7 +55,7 @@ export default class ControlPanel {
         if (this._resultsElem) this._resultsElem.remove();
 
         this._panelElem.querySelector('.yap-control-panel__content')
-            .append(this._createResults());
+            .append(this._createResultsElem());
         elems.forEach(elem => this._resultsElem.append(elem));
     }
 

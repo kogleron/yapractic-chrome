@@ -16,15 +16,6 @@ export default class CommentsManager {
         const errors = result.extra.errors;
 
         errors.forEach(error => this._processError(error));
-
-        // let tbutton = document.evaluate("//div[contains(text(), 'Card.js')]/ancestor::button", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-        // // tbutton.click();
-        //
-        // let tnode;
-        // let tresult = document.evaluate("self::node()/descendant::div[text() != '' and translate(text(), '0123456789', '') = '']", tbutton.parentNode, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE);
-        // while (tnode = tresult.iterateNext()){
-        //     console.log(tnode);
-        // }
     }
 
     showErrorMessage(error, message, rule, scrollTo) {
@@ -39,7 +30,7 @@ export default class CommentsManager {
         this._openBlock(filename, block);
 
         // noinspection JSUnresolvedVariable
-        const lineElem = this._showMessage(message, block);
+        const lineElem = this._highlightLine(message, block);
 
         if (scrollTo) {
             lineElem.scrollIntoView();
@@ -63,9 +54,6 @@ export default class CommentsManager {
         const block = this._getFileBlock(filename);
 
         this._openBlock(filename, block);
-
-        // noinspection JSUnresolvedVariable
-        // error.messages.forEach(message => this._showMessage(message, block));
     }
 
     _getFileNameFromError(error) {
@@ -74,13 +62,14 @@ export default class CommentsManager {
 
     /**
      * @param {String} pathname
-     * @return {Node}
+     * @return {HTMLElement}
      */
     _getFileBlock(pathname) {
         const filename = pathname.split('/').reverse().shift();
 
         this._fileBrowser.openPath(pathname);
 
+        // noinspection JSValidateTypes
         return document.evaluate(
             "//div[contains(text(), '" + filename + "')]/ancestor::button",
             document,
@@ -106,6 +95,7 @@ export default class CommentsManager {
         if (result.singleNodeValue) return;
 
         const filename = pathname.split('/').reverse().shift();
+        // noinspection JSUnresolvedFunction
         document.evaluate(
             "//div[contains(text(), '" + filename + "')]/ancestor::button",
             document,
@@ -121,7 +111,7 @@ export default class CommentsManager {
      * @return {HTMLElement}
      * @private
      */
-    _showMessage(message, block) {
+    _highlightLine(message, block) {
         const line = message.line;
         const lineElem = document.evaluate(
             "self::node()/descendant::div[text()  = '" + line + "']",
@@ -130,23 +120,12 @@ export default class CommentsManager {
             XPathResult.FIRST_ORDERED_NODE_TYPE
         ).singleNodeValue;
         lineElem.style.backgroundColor = "#f86c6b";
+        // noinspection JSUnresolvedVariable
         lineElem.parentNode.classList.add('yap-tooltip');
         lineElem.title = message.message;
 
-        // this.addTooltip(lineElem, message);
-
+        // noinspection JSValidateTypes
         return lineElem;
-    }
-
-    addTooltip(lineElem, message) {
-        if (lineElem.parentNode.querySelector('.yap-tooltiptext')) {
-            return;
-        }
-
-        const tooltipTextElem = document.createElement('span');
-        tooltipTextElem.classList.add('yap-tooltiptext');
-        tooltipTextElem.textContent = message.message;
-        lineElem.parentNode.append(tooltipTextElem);
     }
 
     /**

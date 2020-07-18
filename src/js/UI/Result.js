@@ -40,21 +40,8 @@ export default class Result {
      */
     _createRule(result) {
         const rule = result.rule;
-        const extra = result.extra;
         const ruleElem = document.createElement('div');
         ruleElem.classList.add('yap-rule', 'yap-rule_' + rule.type);
-
-        const nameElem = document.createElement('div');
-        nameElem.classList.add('yap-rule__name');
-        nameElem.textContent = rule.name;
-        if (extra && extra.type && 'positioned' === extra.type) {
-            nameElem.title = 'Can be inserted';
-            nameElem.classList.add('yap-_clickable');
-            nameElem.onclick = () => {
-                this._showExtra(null, ruleElem.parentNode.querySelector('.yap-result__extra'));
-                this.insertCommentsHandler(result);
-            }
-        }
 
         const descriptionElem = document.createElement('div');
         descriptionElem.classList.add('yap-rule__description');
@@ -66,9 +53,13 @@ export default class Result {
         const typeElem = document.createElement('div');
         typeElem.classList.add('yap-rule__type');
         typeElem.textContent = rule.type;
-        typeElem.onclick = this._showExtra;
+        typeElem.title = rule.name + ':' + ruleElem.type;
+        typeElem.onclick = (evt) => {
+            copyToClipboardText(rule.name);
+            this._showExtra(evt);
+        };
 
-        ruleElem.append(nameElem, descriptionElem, typeElem);
+        ruleElem.append(descriptionElem, typeElem);
 
         return ruleElem;
     }
@@ -81,17 +72,14 @@ export default class Result {
     _createExtra(result) {
         const extraElem = document.createElement('div');
         extraElem.classList.add('yap-result__extra');
-        extraElem.classList.add('yap-_collapsed');
+        if (this._extraFormatter.collapsed(result)) {
+            extraElem.classList.add('yap-_collapsed');
+        }
 
         this._extraFormatter.format(extraElem, result);
 
         return extraElem;
     }
-
-    insertCommentsHandler = (result) => {
-        alert('Inserting...');
-        console.log(result);
-    };
 
     _showExtra(evt, target) {
         const extraElem = null === evt ? target : evt.target.parentNode.parentNode.querySelector('.yap-result__extra');
