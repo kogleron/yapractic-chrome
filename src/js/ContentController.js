@@ -6,13 +6,15 @@ import CommentsManager from "./Services/CommentsManager.js";
 import ExtraFormatter from "./Services/ExtraFormatter.js";
 import RawExtraFormatter from "./Services/ExtraFormatter/RawExtraFormatter.js";
 import PositionedExtraFormatter from "./Services/ExtraFormatter/PositionedExtraFormatter.js";
+import FileBrowser from "./Services/FileBrowser.js";
+
 import {URLS} from "./consts.js";
 
 // noinspection JSUnusedGlobalSymbols
 export function main() {
     injectCss(chrome.extension.getURL('/src/css/styles.css'));
 
-    const commentsManager = new CommentsManager();
+    const commentsManager = new CommentsManager(new FileBrowser());
     const controlPanel = new ControlPanel();
     const extraFormatter = new ExtraFormatter(
         new PositionedExtraFormatter(commentsManager),

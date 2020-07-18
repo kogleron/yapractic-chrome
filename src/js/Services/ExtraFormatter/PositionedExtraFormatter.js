@@ -44,7 +44,7 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
         const fileElement = document.createElement('div');
         fileElement.classList.add('yap-error__filepath');
         // noinspection JSValidateTypes
-        fileElement.textContent = error.filePath.match(/[^/]+$/);
+        fileElement.textContent = error.filePath;
 
         errorElem.append(fileElement);
 

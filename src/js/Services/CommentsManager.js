@@ -2,6 +2,13 @@ import {copyToClipboardText} from "../Utils/utils.js";
 
 export default class CommentsManager {
 
+    /**
+     * @param {FileBrowser} fileBrowser
+     */
+    constructor(fileBrowser) {
+        this._fileBrowser = fileBrowser;
+    }
+
     insertPositionedCommentsFromResult(result) {
         console.log('From comments manager', result);
 
@@ -23,7 +30,7 @@ export default class CommentsManager {
     showErrorMessage(error, message, rule, scrollTo) {
         copyToClipboardText("[не сделано] " + rule.description + " (" + message.message + ")");
 
-        const filename = this._getFileNameFromError(error);
+        const filename = error.filePath;
         const block = this._getFileBlock(filename);
 
         if (!block) {
@@ -46,7 +53,7 @@ export default class CommentsManager {
         this._openBlock(filename, block);
 
         // noinspection JSUnresolvedVariable
-        error.messages.forEach(message => this._showMessage(message, block));
+        // error.messages.forEach(message => this._showMessage(message, block));
     }
 
     _getFileNameFromError(error) {
@@ -54,10 +61,14 @@ export default class CommentsManager {
     }
 
     /**
-     * @param {String} filename
+     * @param {String} pathname
      * @return {Node}
      */
-    _getFileBlock(filename) {
+    _getFileBlock(pathname) {
+        const filename = pathname.split('/').reverse().shift();
+
+        this._fileBrowser.openPath(pathname);
+
         return document.evaluate(
             "//div[contains(text(), '" + filename + "')]/ancestor::button",
             document,
@@ -67,7 +78,12 @@ export default class CommentsManager {
         ).singleNodeValue.parentNode;
     }
 
-    _openBlock(filename, block) {
+    /**
+     * @param {String} pathname
+     * @param {HTMLElement} block
+     * @private
+     */
+    _openBlock(pathname, block) {
         const result = document.evaluate(
             "self::node()/descendant::div[text()  = '1']",
             block,
@@ -77,6 +93,7 @@ export default class CommentsManager {
 
         if (result.singleNodeValue) return;
 
+        const filename = pathname.split('/').reverse().shift();
         document.evaluate(
             "//div[contains(text(), '" + filename + "')]/ancestor::button",
             document,
@@ -104,14 +121,19 @@ export default class CommentsManager {
         lineElem.parentNode.classList.add('yap-tooltip');
         lineElem.title = message.message;
 
-        if (!lineElem.parentNode.querySelector('.yap-tooltiptext')) {
-            const tooltipTextElem = document.createElement('span');
-            tooltipTextElem.classList.add('yap-tooltiptext');
-            tooltipTextElem.textContent = message.message;
-            lineElem.parentNode.append(tooltipTextElem);
+        // this.addTooltip(lineElem, message);
+
+        return lineElem;
+    }
+
+    addTooltip(lineElem, message) {
+        if (lineElem.parentNode.querySelector('.yap-tooltiptext')) {
+            return;
         }
 
-        console.log(lineElem);
-        return lineElem;
+        const tooltipTextElem = document.createElement('span');
+        tooltipTextElem.classList.add('yap-tooltiptext');
+        tooltipTextElem.textContent = message.message;
+        lineElem.parentNode.append(tooltipTextElem);
     }
 }
