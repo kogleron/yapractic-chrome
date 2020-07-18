@@ -44,6 +44,18 @@ export default class CommentsManager {
         if (scrollTo) {
             lineElem.scrollIntoView();
         }
+
+        this._openCommentDialog(lineElem);
+        setTimeout(() => {
+            this._setCommentType(lineElem, rule);
+            setTimeout(() => {
+                this._setComment(lineElem, message, rule);
+                setTimeout(() => {
+                    this._sendComment(lineElem);
+                }, 500);
+            }, 500);
+
+        }, 1000);
     }
 
     _processError(error) {
@@ -135,5 +147,63 @@ export default class CommentsManager {
         tooltipTextElem.classList.add('yap-tooltiptext');
         tooltipTextElem.textContent = message.message;
         lineElem.parentNode.append(tooltipTextElem);
+    }
+
+    /**
+     * @param {HTMLElement} lineElem
+     * @private
+     */
+    _openCommentDialog(lineElem) {
+        document.evaluate(
+            "self::node()/following-sibling::code",
+            lineElem,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE
+        ).singleNodeValue.click();
+    }
+
+    /**
+     * @param {HTMLElement} lineElem
+     * @param message
+     * @param rule
+     * @private
+     */
+    _setComment(lineElem, message, rule) {
+        const comment = "[не сделано] " + rule.description + "\n - " + message.message + "\n";
+        const textAreaElement = document.evaluate(
+            "self::node()/parent::div/descendant::textarea",
+            lineElem,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE
+        ).singleNodeValue;
+
+        textAreaElement.value = comment;
+        textAreaElement.dispatchEvent(new Event('input', {
+            view: window,
+            bubbles: true,
+            cancelable: true
+        }))
+    }
+
+    _setCommentType(lineElem, rule) {
+
+        const label = rule.type === 'fix' ? "Надо исправить" : "Можно лучше";
+        document.evaluate(
+            "self::node()/parent::div/descendant::span[contains(text(), '" + label + "')]",
+            lineElem,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE
+        ).singleNodeValue.click()
+    }
+
+    _sendComment(lineElem) {
+        const submitButton = document.evaluate(
+            "self::node()/parent::div/descendant::span[contains(text(), 'Комментировать')]/ancestor::button",
+            lineElem,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE
+        ).singleNodeValue;
+        console.log(submitButton);
+        submitButton.click();
     }
 }
