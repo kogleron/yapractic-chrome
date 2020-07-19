@@ -19,7 +19,7 @@ export default class CommentsManager {
     }
 
     showErrorMessage(error, message, rule, scrollTo) {
-        copyToClipboardText("- [не сделано] " + rule.description + " (" + message.message + ")");
+        copyToClipboardText("- [`не сделано`] " + rule.description + " (" + message.message + ")");
 
         const filename = error.filePath;
         const block = this._getFileBlock(filename);
@@ -148,7 +148,7 @@ export default class CommentsManager {
      * @private
      */
     _setComment(lineElem, message, rule) {
-        const comment = "[не сделано] " + rule.description + "\n - " + message.message + "\n";
+        const comment = "[`не сделано`] " + rule.description + "\n - " + message.message + "\n";
         const textAreaElement = document.evaluate(
             "self::node()/parent::div/descendant::textarea",
             lineElem,
