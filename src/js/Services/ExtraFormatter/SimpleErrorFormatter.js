@@ -16,7 +16,7 @@ export default class SimpleErrorFormatter extends AbstractExtraFormatter {
         rawElem.classList.add('yap-result__extra-simple_error');
         rawElem.textContent = result.extra.message;
         rawElem.onclick = () => {
-            copyToClipboardText("[не сделано] " + result.rule.description
+            copyToClipboardText("- [не сделано] " + result.rule.description
                 + "\n "
                 + (result.extra.message.includes('- ') ? "" : " - ")
                 + result.extra.message);

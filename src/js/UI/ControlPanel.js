@@ -176,7 +176,7 @@ export default class ControlPanel {
         this._checklistElem.addEventListener('click', (evt) => {
             if (evt.target.nodeName !== 'LABEL') return;
 
-            copyToClipboardText("[не сделано] " + evt.target.textContent);
+            copyToClipboardText("- [не сделано] " + evt.target.textContent);
         });
 
         return checklistElem;

@@ -47,7 +47,7 @@ export default class Result {
         descriptionElem.classList.add('yap-rule__description');
         descriptionElem.textContent = rule.description;
         descriptionElem.onclick = function (evt) {
-            copyToClipboardText("[не сделано] " + evt.target.textContent);
+            copyToClipboardText("- [не сделано] " + evt.target.textContent);
         };
 
         const typeElem = document.createElement('div');
