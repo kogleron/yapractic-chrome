@@ -196,6 +196,11 @@
     margin-bottom: 10px;
 }
 
+.yap-error__goto {
+    display: inline-block;
+    padding-right: 4px;
+}
+
 .yap-error__filepath {
     margin-bottom: 10px;
     color: salmon;
@@ -204,6 +209,10 @@
 .yap-error__message {
     margin-bottom: 5px;
     overflow: hidden;
+}
+
+.yap-error__message-message {
+    cursor: pointer;
 }
 
 /* Tooltip container */

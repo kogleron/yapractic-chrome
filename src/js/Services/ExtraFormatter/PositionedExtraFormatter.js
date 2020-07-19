@@ -68,17 +68,10 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
 
         block.append(
             this._createGotoElem(message, error, rule),
-            this._createMessageElem(message)
+            this._createMessageElem(message, error, rule)
         );
 
         return block;
-    }
-
-    _createMessageElem(message) {
-        const element = document.createElement('span');
-        element.textContent = " " + message.message;
-        element.classList.add('yap-error__message-message');
-        return element;
     }
 
     /**
@@ -88,12 +81,33 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
      * @return {HTMLSpanElement}
      * @private
      */
+    _createMessageElem(message, error, rule) {
+        const element = document.createElement('span');
+        element.textContent = message.message;
+        element.classList.add('yap-error__message-message');
+        element.title = 'Добавить комментарий';
+        element.onclick = () => {
+            this._commentsManager.showErrorMessage(error, message, rule);
+        };
+
+        return element;
+    }
+
+    /**
+     * Creates button by clicking on it comment with error will be inserted.
+     * @param {Message} message
+     * @param {ErrorInfo} error
+     * @param {Rule} rule
+     * @return {HTMLSpanElement}
+     * @private
+     */
     _createGotoElem(message, error, rule) {
         const element = document.createElement('span');
-        element.classList.add('yap-error__message-goto', 'yap-_clickable');
-        element.textContent = message.line + ":" + message.column;
+        element.classList.add('yap-error__goto', 'yap-_clickable');
+        element.textContent = "[" + message.line + ":" + message.column + "]";
+        element.title = 'Перейти к строке';
         element.onclick = () => {
-            this._commentsManager.showErrorMessage(error, message, rule, true)
+            this._commentsManager.gotoToErrorLine(error, message, rule);
         };
         return element;
     }
