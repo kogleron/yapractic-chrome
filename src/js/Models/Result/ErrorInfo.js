@@ -1,4 +1,4 @@
-class Error {
+class ErrorInfo {
     /**
      * @type {String}
      */

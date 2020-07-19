@@ -32,7 +32,7 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
 
     /**
      *
-     * @param {Error} error
+     * @param {ErrorInfo} error
      * @param {Rule} rule
      * @return {HTMLElement}
      * @private
@@ -56,7 +56,7 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
 
     /**
      * @param {Message} message
-     * @param {Error} error
+     * @param {ErrorInfo} error
      * @param {Rule} rule
      * @return {HTMLElement}
      * @private
@@ -81,12 +81,19 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
         return element;
     }
 
+    /**
+     * @param {Message} message
+     * @param {ErrorInfo} error
+     * @param {Rule} rule
+     * @return {HTMLSpanElement}
+     * @private
+     */
     _createGotoElem(message, error, rule) {
         const element = document.createElement('span');
         element.classList.add('yap-error__message-goto', 'yap-_clickable');
         element.textContent = message.line + ":" + message.column;
         element.onclick = () => {
-            this._commentsManager.showErrorMessage(error, message, rule,true)
+            this._commentsManager.showErrorMessage(error, message, rule, true)
         };
         return element;
     }
