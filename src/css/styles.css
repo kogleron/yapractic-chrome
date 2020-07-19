@@ -131,6 +131,8 @@
     background-color: #eee;
     line-height: 0;
     border-radius: 21px;
+    padding: 0;
+    margin: 0;
 }
 
 .yap-rule_reject .yap-rule__type {
