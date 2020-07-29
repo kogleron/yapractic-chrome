@@ -104,7 +104,7 @@ export default class PositionedExtraFormatter extends AbstractExtraFormatter {
     _createGotoElem(message, error, rule) {
         const element = document.createElement('span');
         element.classList.add('yap-error__goto', 'yap-_clickable');
-        element.textContent = "[" + message.line + ":" + message.column + "]";
+        element.textContent = " - [" + message.line + ":" + message.column + "]";
         element.title = 'Перейти к строке';
         element.onclick = () => {
             this._commentsManager.gotoToErrorLine(error, message, rule);

@@ -25,7 +25,7 @@ export default class CommentsManager {
      * @return {HTMLElement}
      */
     gotoToErrorLine(error, message, rule) {
-        copyToClipboardText("- [`не сделано`] " + rule.description + " (" + message.message + ")");
+        copyToClipboardText("* [`не сделано`] " + rule.description + " (" + message.message + ")");
 
         const filename = error.filePath;
         const block = this._getFileBlock(filename);
