@@ -27,3 +27,16 @@ export function copyToClipboardText(text) {
     document.execCommand("copy");
     document.body.removeChild(dummy);
 }
+
+/**
+ * Copies to clipboard given text and prepares it for insertion:
+ *  - replaces `- ` with `* `
+ *
+ * @param {String} text
+ */
+export function copyToClipboardComment(text) {
+
+    text = text.replace('- ', '* ');
+
+    copyToClipboardText(text);
+}

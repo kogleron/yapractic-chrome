@@ -1,5 +1,5 @@
 import AbstractExtraFormatter from "./AbstractExtraFormatter.js";
-import {copyToClipboardText} from "../../Utils/utils.js";
+import {copyToClipboardComment} from "../../Utils/utils.js";
 
 export default class SimpleErrorFormatter extends AbstractExtraFormatter {
     supports(result) {
@@ -16,10 +16,12 @@ export default class SimpleErrorFormatter extends AbstractExtraFormatter {
         rawElem.classList.add('yap-result__extra-simple_error');
         rawElem.textContent = result.extra.message;
         rawElem.onclick = () => {
-            copyToClipboardText("* [`не сделано`] " + result.rule.description
+            copyToClipboardComment(
+                "* [`не сделано`] " + result.rule.description
                 + "\n "
                 + (result.extra.message.includes('- ') ? "" : " - ")
-                + result.extra.message);
+                + result.extra.message
+            );
         };
 
         errorElem.append(rawElem);
