@@ -43,7 +43,10 @@ export default class FileBrowser {
             }
 
             const folderElem = this._findFolderElement(filename);
-            if (!folderElem) throw "Could not find " + filename;
+            if (!folderElem) {
+                console.log("Could not find " + filename);
+                continue;
+            }
             if (this._isOpenedFolderElement(folderElem)) continue;
             this._openFolderElement(folderElem);
         }
